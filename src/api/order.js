@@ -61,5 +61,5 @@ export function formateOrderStatus(row, column) {
   } else if (orderStatus === 402) {
     return '已收货(系统)'
   }
-  return row.address;
+  return row.address
 }

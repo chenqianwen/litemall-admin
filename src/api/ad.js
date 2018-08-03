@@ -39,3 +39,11 @@ export function deleteAd(data) {
     data
   })
 }
+
+export function listType(data) {
+  return request({
+    url: '/ad/type/list',
+    method: 'get',
+    data
+  })
+}

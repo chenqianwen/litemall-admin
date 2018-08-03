@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {Message} from 'element-ui'
+import { Message } from 'element-ui'
 
 // create an axios instance
 const service = axios.create({
@@ -31,7 +31,7 @@ export function listStorage(query) {
 
 export function createStorage(data) {
   return service({
-    url: '/storage/create',
+    url: '/upload',
     method: 'post',
     data
   })
@@ -46,9 +46,9 @@ export function uploadFile(data, sCallback) {
   }).then(function (res) {
     // 请求成功
     if (res.status === 200) {
-      if (res.data.errcode === "0") {
+      if (res.data.errno === 0) {
         sCallback && sCallback(res.data.data)
-      } else if (res.data.errcode === "-1") {
+      } else if (res.data.errno === -1) {
         Message({
           message: res.data.data,
           type: 'error',
