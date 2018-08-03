@@ -16,8 +16,8 @@ push_tag()
     set -e
 	#build
 	cd $WORKSPACE
-	cnpm install
-	npm run build
+	## cnpm install
+	## npm run build:
 
     # push node-datacenter
     docker build -t $APP_NAME:$BUILD_TAG .
