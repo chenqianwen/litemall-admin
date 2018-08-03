@@ -3,7 +3,7 @@
 BUILD_TAG="1.0"
 REGISTRY_URL="registry-internal.cn-hangzhou.aliyuncs.com"
 NAME_SPACE="yangguoliang"
-APP_NAME="wx-admin-ui"
+APP_NAME="litemall-admin-ui"
 
 if [ "$2" != "" ];
     then
@@ -16,8 +16,8 @@ push_tag()
     set -e
 	#build
 	cd $WORKSPACE
-	## cnpm install
-	## npm run build:
+	cnpm install
+  npm run build:prod
 
     # push node-datacenter
     docker build -t $APP_NAME:$BUILD_TAG .
