@@ -7,7 +7,6 @@
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button class="filter-item" type="primary" @click="handleCreate" icon="el-icon-edit">添加</el-button>
-      <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">导出</el-button>
     </div>
 
     <!-- 查询结果 -->
@@ -19,7 +18,7 @@
       </el-table-column>
 
       <el-table-column align="center" min-width="100px" label="管理员头像" prop="avatar">
-      </el-table-column>        
+      </el-table-column>
 
       <el-table-column align="center" label="操作" width="250" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -47,9 +46,9 @@
         </el-form-item>
         <el-form-item label="确认密码" prop="checkPassword">
           <el-input type="password" v-model="dataForm.checkPassword" auto-complete="off"></el-input>
-        </el-form-item>                
+        </el-form-item>
         <el-form-item label="管理员头像" prop="avatar">
-          <el-input v-model="dataForm.avatar"></el-input>          
+          <el-input v-model="dataForm.avatar"></el-input>
           <el-upload action="#" list-type="picture" :show-file-list="false" :limit="1" :http-request="uploadAvatar">
             <el-button size="small" type="primary">点击上传</el-button>
           </el-upload>
@@ -242,15 +241,6 @@ export default {
         })
         const index = this.list.indexOf(row)
         this.list.splice(index, 1)
-      })
-    },
-    handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['管理员ID', '管理员名称', '管理员头像']
-        const filterVal = ['id', 'username', 'avatar']
-        excel.export_json_to_excel2(tHeader, this.list, filterVal, '管理员信息')
-        this.downloadLoading = false
       })
     }
   }

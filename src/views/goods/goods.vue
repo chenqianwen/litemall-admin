@@ -9,9 +9,6 @@
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button class="filter-item" type="primary" @click="handleCreate" icon="el-icon-edit">添加</el-button>
-      <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download"
-                 @click="handleDownload">导出
-      </el-button>
     </div>
 
     <!-- 查询结果 -->
@@ -304,7 +301,6 @@
           goodsSn: [{required: true, message: '商品编号不能为空', trigger: 'blur'}],
           name: [{required: true, message: '商品名称不能为空', trigger: 'blur'}]
         },
-        downloadLoading: false,
         editorInit: {
           language: 'zh_CN',
           plugins: ['advlist anchor autolink autoresize autosave code codesample colorpicker colorpicker contextmenu directionality emoticons fullscreen hr image imagetools importcss insertdatetime legacyoutput link lists media nonbreaking noneditable pagebreak paste preview print save searchreplace tabfocus table template textcolor textpattern visualblocks visualchars wordcount'],
@@ -460,15 +456,6 @@
           })
           const index = this.list.indexOf(row)
           this.list.splice(index, 1)
-        })
-      },
-      handleDownload() {
-        this.downloadLoading = true
-        import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['商品ID', '商品编号', '名称', '专柜价格', '当前价格', '是否新品', '是否热品', '是否在售', '首页主图', '宣传画廊', '商品介绍', '详细介绍', '商品主图', '商品单位', '关键字', '类目ID', '品牌商ID']
-          const filterVal = ['id', 'goodsSn', 'name', 'counterPrice', 'retailPrice', 'isNew', 'isHot', 'isOnSale', 'listPicUrl', 'gallery', 'goodsBrief', 'goodsDesc', 'primaryPicUrl', 'goodsUnit', 'keywords', 'categoryId', 'brandId']
-          excel.export_json_to_excel2(tHeader, this.list, filterVal, '商品信息')
-          this.downloadLoading = false
         })
       },
       listPicUrlHandleExceed(files, fileList) {

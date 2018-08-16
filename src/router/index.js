@@ -58,7 +58,7 @@ export const asyncRouterMap = [
     redirect: 'noredirect',
     name: 'userManage',
     meta: {
-      title: '用户管理',
+      title: '会员管理',
       icon: 'chart'
     },
     children: [
@@ -80,9 +80,10 @@ export const asyncRouterMap = [
       icon: 'chart'
     },
     children: [
+      { path: 'ad', component: _import('mall/ad'), name: 'ad', meta: { title: '广告列表', noCache: true }},
       { path: 'show', component: _import('mall/show'), name: 'show', meta: { title: '首页展示', noCache: true }},
       { path: 'region', component: _import('mall/region'), name: 'region', meta: { title: '行政区域', noCache: true }},
-      { path: 'brand', component: _import('mall/brand'), name: 'brand', meta: { title: '品牌制造商', noCache: true }},
+      { path: 'hospital', component: _import('mall/hospital'), name: 'hospital', meta: { title: '诊所管理', noCache: true }},
       { path: 'category', component: _import('mall/category'), name: 'category', meta: { title: '商品类目', noCache: true }},
       { path: 'order', component: _import('mall/order'), name: 'order', meta: { title: '订单管理', noCache: true }},
       { path: 'issue', component: _import('mall/issue'), name: 'issue', meta: { title: '通用问题', noCache: true }},
@@ -110,32 +111,12 @@ export const asyncRouterMap = [
     ]
   },
   {
-    path: '/promotion',
-    component: Layout,
-    redirect: 'noredirect',
-    name: 'promotionManage',
-    meta: {
-      title: '推广管理',
-      icon: 'chart'
-    },
-    children: [
-      { path: 'ad', component: _import('promotion/ad'), name: 'ad', meta: { title: '广告列表', noCache: true }},
-      { path: 'topic', component: _import('promotion/topic'), name: 'topic', meta: { title: '专题管理', noCache: true }},
-      { path: 'hospital', component: _import('promotion/hospital'), name: 'hospital', meta: { title: '诊所管理', noCache: true }}
-    ]
-  },
-  {
     path: '/sys',
     component: Layout,
     redirect: 'noredirect',
     name: 'sysManage',
-    meta: {
-      title: '系统管理',
-      icon: 'chart'
-    },
     children: [
-      { path: 'admin', component: _import('sys/admin'), name: 'admin', meta: { title: '管理员', noCache: true }},
-      { path: 'os', component: _import('sys/os'), name: 'os', meta: { title: '对象存储', noCache: true }}
+      { path: 'admin', component: _import('sys/admin'), name: 'admin', meta: { title: '系统管理员',icon: 'user', noCache: true }}
     ]
   },
 

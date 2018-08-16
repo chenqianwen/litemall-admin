@@ -9,11 +9,18 @@
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
-      <el-button class="filter-item" type="primary" v-waves icon="el-icon-download" @click="handleDownload" :loading="downloadLoading">导出</el-button>
     </div>
 
     <!-- 查询结果 -->
     <el-table size="small" :data="list" v-loading="listLoading" element-loading-text="正在查询中。。。" border fit highlight-current-row>
+
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <span v-for="url in props.row.picUrls">
+            <img :src="url" width="200px" height="200px"></img>
+          </span>
+        </template>
+      </el-table-column>
 
       <el-table-column align="center" width="150px" label="评论ID" prop="id" sortable>
       </el-table-column>
@@ -136,8 +143,7 @@ export default {
         userId: [{ required: true, message: '用户ID不能为空', trigger: 'blur' }],
         valueId: [{ required: true, message: '商品ID不能为空', trigger: 'blur' }],
         content: [{ required: true, message: '评论不能为空', trigger: 'blur' }]
-      },
-      downloadLoading: false
+      }
     }
   },
   created() {
@@ -252,15 +258,6 @@ export default {
         })
         const index = this.list.indexOf(row)
         this.list.splice(index, 1)
-      })
-    },
-    handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['评论ID', '用户ID', '商品ID', '评论', '评论图片列表', '评论时间']
-        const filterVal = ['id', 'userId', 'valueId', 'content', 'picUrls', 'addTime']
-        excel.export_json_to_excel2(tHeader, this.list, filterVal, '商品评论信息')
-        this.downloadLoading = false
       })
     }
   }

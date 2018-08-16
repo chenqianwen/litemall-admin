@@ -7,7 +7,6 @@
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button class="filter-item" type="primary" @click="handleCreate" icon="el-icon-edit">添加</el-button>
-      <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">导出</el-button>
     </div>
 
     <!-- 查询结果 -->
@@ -107,8 +106,7 @@ export default {
         goodsId: [{ required: true, message: '商品ID不能为空', trigger: 'blur' }],
         attribute: [{ required: true, message: '商品参数名称不能为空', trigger: 'blur' }],
         value: [{ required: true, message: '商品参数值不能为空', trigger: 'blur' }]
-      },
-      downloadLoading: false
+      }
     }
   },
   created() {
@@ -186,6 +184,7 @@ export default {
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
+      this.getGoodsList()
     },
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
@@ -219,15 +218,6 @@ export default {
         })
         const index = this.list.indexOf(row)
         this.list.splice(index, 1)
-      })
-    },
-    handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['商品参数ID', '商品ID', '商品参数名称', '商品参数值']
-        const filterVal = ['id', 'goodsId', 'attribute', 'value']
-        excel.export_json_to_excel2(tHeader, this.list, filterVal, '商品参数信息')
-        this.downloadLoading = false
       })
     }
   }

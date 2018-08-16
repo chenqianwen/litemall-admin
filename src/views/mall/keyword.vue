@@ -9,7 +9,6 @@
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
-      <el-button class="filter-item" type="primary" v-waves icon="el-icon-download" @click="handleDownload" :loading="downloadLoading">导出</el-button>
     </div>
 
     <!-- 查询结果 -->
@@ -28,13 +27,13 @@
         <template slot-scope="scope">
           <el-tag :type="scope.row.isHot ? 'success' : 'error' ">{{scope.row.isHot ? '是' : '否'}}</el-tag>
         </template>
-      </el-table-column>  
+      </el-table-column>
 
       <el-table-column align="center" min-width="100px" label="是否默认" prop="isDefault">
         <template slot-scope="scope">
           <el-tag :type="scope.row.isDefault ? 'success' : 'error' ">{{scope.row.isDefault ? '是' : '否'}}</el-tag>
         </template>
-      </el-table-column>  
+      </el-table-column>
 
       <el-table-column align="center" min-width="100px" label="是否显示" prop="isShow">
         <template slot-scope="scope">
@@ -73,15 +72,15 @@
             <el-option label="非热门" :value="false">
             </el-option>
           </el-select>
-        </el-form-item>  
-        <el-form-item label="是否默认" prop="isDefault"> 
+        </el-form-item>
+        <el-form-item label="是否默认" prop="isDefault">
           <el-select v-model="dataForm.isDefault" placeholder="请选择">
             <el-option label="默认" :value="true">
             </el-option>
             <el-option label="非默认" :value="false">
             </el-option>
           </el-select>
-        </el-form-item>          
+        </el-form-item>
         <el-form-item label="是否显示" prop="isShow">
           <el-select v-model="dataForm.isShow" placeholder="请选择">
             <el-option label="显示" :value="true">
@@ -153,8 +152,7 @@ export default {
       rules: {
         keyword: [{ required: true, message: '关键词不能为空', trigger: 'blur' }],
         url: [{ required: true, message: '跳转链接称不能为空', trigger: 'blur' }]
-      },
-      downloadLoading: false
+      }
     }
   },
   created() {
@@ -259,15 +257,6 @@ export default {
         })
         const index = this.list.indexOf(row)
         this.list.splice(index, 1)
-      })
-    },
-    handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['关键词ID', '关键词', '跳转链接', '是否新上', '是否默认', '是否显示']
-        const filterVal = ['id', 'keyword', 'url', 'isNew', 'isDefault', 'isShow']
-        excel.export_json_to_excel2(tHeader, this.list, filterVal, '关键词信息')
-        this.downloadLoading = false
       })
     }
   }

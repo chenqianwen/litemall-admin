@@ -7,7 +7,6 @@
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button class="filter-item" type="primary" @click="handleCreate" icon="el-icon-edit">添加</el-button>
-      <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">导出</el-button>
     </div>
 
     <!-- 查询结果 -->
@@ -114,8 +113,7 @@ export default {
         goodsId: [{ required: true, message: '商品ID不能为空', trigger: 'blur' }],
         specification: [{ required: true, message: '商品规格名称不能为空', trigger: 'blur' }],
         value: [{ required: true, message: '商品规格值不能为空', trigger: 'blur' }]
-      },
-      downloadLoading: false
+      }
     }
   },
   created() {
@@ -227,15 +225,6 @@ export default {
         })
         const index = this.list.indexOf(row)
         this.list.splice(index, 1)
-      })
-    },
-    handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['商品规格ID', '商品ID', '商品规格名称', '商品规格值', '商品规格图片']
-        const filterVal = ['id', 'goodsId', 'specification', 'value', 'picUrl']
-        excel.export_json_to_excel2(tHeader, this.list, filterVal, '商品规格信息')
-        this.downloadLoading = false
       })
     }
   }

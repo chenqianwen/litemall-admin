@@ -9,7 +9,6 @@
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button class="filter-item" type="primary" @click="handleCreate" icon="el-icon-edit">添加</el-button>
-      <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">导出</el-button>
     </div>
 
     <!-- 查询结果 -->
@@ -22,9 +21,9 @@
 
       <el-table-column align="center" min-width="100px" label="手机号码" prop="mobile">
       </el-table-column>
-      
+
       <el-table-column align="center" min-width="50px" label="性别" prop="gender">
-      </el-table-column>   
+      </el-table-column>
 
       <el-table-column align="center" min-width="100px" label="生日" prop="birthday">
       </el-table-column>
@@ -37,7 +36,7 @@
         <template slot-scope="scope">
           <el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>
         </template>
-      </el-table-column>     
+      </el-table-column>
 
       <el-table-column align="center" label="操作" width="250" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -68,7 +67,7 @@
         </el-form-item>
         <el-form-item label="确认密码" prop="checkPassword">
           <el-input type="password" v-model="dataForm.checkPassword" auto-complete="off"></el-input>
-        </el-form-item>        
+        </el-form-item>
         <el-form-item label="性别" prop="gender">
           <el-select v-model="dataForm.gender" placeholder="请选择">
             <el-option label="未知" value="未知">
@@ -92,7 +91,7 @@
             <el-option label="高级VIP用户" value="高级VIP用户">
             </el-option>
           </el-select>
-        </el-form-item>            
+        </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-select v-model="dataForm.status" placeholder="请选择">
             <el-option label="可用" value="可用">
@@ -182,8 +181,7 @@ export default {
           { required: true, message: '密码不能为空', trigger: 'blur' },
           { validator: validatePass2, trigger: 'blur' }
         ]
-      },
-      downloadLoading: false
+      }
     }
   },
   filters: {
@@ -300,15 +298,6 @@ export default {
         message: '用户删除操作不支持！',
         type: 'warning',
         duration: 3000
-      })
-    },
-    handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['用户名', '手机号码', '性别', '生日', '状态']
-        const filterVal = ['username', 'mobile', 'gender', 'birthday', 'status']
-        excel.export_json_to_excel2(tHeader, this.list, filterVal, '用户信息')
-        this.downloadLoading = false
       })
     }
   }

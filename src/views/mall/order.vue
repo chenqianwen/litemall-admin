@@ -8,9 +8,6 @@
       <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入订单编号" v-model="listQuery.orderSn">
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
-      <el-button class="filter-item" type="primary" v-waves icon="el-icon-download" @click="handleDownload"
-                 :loading="downloadLoading">导出
-      </el-button>
     </div>
 
     <!-- 查询结果 -->
@@ -157,8 +154,7 @@
           shipEndTime: undefined
         },
         sendDialogFormVisible: false,
-        recvDialogFormVisible: false,
-        downloadLoading: false
+        recvDialogFormVisible: false
       }
     },
     created() {
@@ -257,15 +253,6 @@
               })
             })
           }
-        })
-      },
-      handleDownload() {
-        this.downloadLoading = true
-        import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['订单ID', '订单编号', '用户ID', '订单状态', '是否删除', '收货人', '收货联系电话', '收货地址']
-          const filterVal = ['id', 'orderSn', 'userId', 'orderStatis', 'isDelete', 'consignee', 'mobile', 'address']
-          excel.export_json_to_excel2(tHeader, this.list, filterVal, '订单信息')
-          this.downloadLoading = false
         })
       }
     }

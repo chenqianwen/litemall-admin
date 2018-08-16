@@ -9,7 +9,6 @@
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button class="filter-item" type="primary" @click="handleCreate" icon="el-icon-edit">添加</el-button>
-      <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">导出</el-button>
     </div>
 
     <!-- 查询结果 -->
@@ -22,9 +21,9 @@
 
       <el-table-column align="center" min-width="100px" label="商品ID" prop="goodsId">
       </el-table-column>
-      
+
       <el-table-column align="center" min-width="100px" label="添加时间" prop="addTime">
-      </el-table-column>          
+      </el-table-column>
 
       <el-table-column align="center" label="操作" width="250" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -101,8 +100,7 @@ export default {
       rules: {
         userId: [{ required: true, message: '用户ID不能为空', trigger: 'blur' }],
         goodsId: [{ required: true, message: '商品ID不能为空', trigger: 'blur' }]
-      },
-      downloadLoading: false
+      }
     }
   },
   created() {
@@ -205,15 +203,6 @@ export default {
         })
         const index = this.list.indexOf(row)
         this.list.splice(index, 1)
-      })
-    },
-    handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['用户ID', '商品ID', '添加时间']
-        const filterVal = ['userId', 'goodsId', 'addTime']
-        excel.export_json_to_excel2(tHeader, this.list, filterVal, '用户收藏信息')
-        this.downloadLoading = false
       })
     }
   }

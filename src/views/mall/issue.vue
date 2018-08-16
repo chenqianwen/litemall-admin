@@ -7,7 +7,6 @@
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button class="filter-item" type="primary" @click="handleCreate" icon="el-icon-edit">添加</el-button>
-      <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">导出</el-button>
     </div>
 
     <!-- 查询结果 -->
@@ -19,7 +18,7 @@
       </el-table-column>
 
       <el-table-column align="center" min-width="400px" label="问题回复" prop="answer">
-      </el-table-column>      
+      </el-table-column>
 
       <el-table-column align="center" label="操作" width="250" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -90,8 +89,7 @@ export default {
       rules: {
         question: [{ required: true, message: '问题不能为空', trigger: 'blur' }],
         answer: [{ required: true, message: '回复不能为空', trigger: 'blur' }]
-      },
-      downloadLoading: false
+      }
     }
   },
   created() {
@@ -193,15 +191,6 @@ export default {
         })
         const index = this.list.indexOf(row)
         this.list.splice(index, 1)
-      })
-    },
-    handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['问题ID', '问题内容', '问题回复']
-        const filterVal = ['id', 'question', 'answer']
-        excel.export_json_to_excel2(tHeader, this.list, filterVal, '常见问题信息')
-        this.downloadLoading = false
       })
     }
   }

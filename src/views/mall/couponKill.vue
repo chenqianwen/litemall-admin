@@ -43,14 +43,21 @@
       <el-form ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="100px"
                style='width: 80%; margin-left:50px;'>
         <el-form-item label="选择优惠券" prop="couponId">
-          <el-select ref="couponRef" v-model="dataForm.couponId" placeholder="请选择"  style='width: 100%' ></el-select>
+          <el-select ref="couponRef" v-model="dataForm.couponId" placeholder="请选择" style='width: 100%'>
+            <el-option
+              v-for="item in couponList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
         </el-form-item>
-        </el-form-item>
+        <el-form-item label="秒杀数量" prop="totalNumber">
           <el-input v-model="dataForm.totalNumber" style='width: 100%'></el-input>
         </el-form-item>
-         <el-form-item label="活动开始时间" prop="startTime">
+        <el-form-item label="活动开始时间" prop="startTime">
           <el-date-picker v-model="dataForm.startTime" type="datetime" placeholder="选择日期"
-                         cff style='width: 100%'>b
+                          cff style='width: 100%'>
           </el-date-picker>
         </el-form-item>
       </el-form>
@@ -66,7 +73,7 @@
 
 <script>
   import {getValidCoupon} from '@/api/coupon'
-  import {listCouponKill,createCouponKill,updateCouponKill,deleteCouponKill} from '@/api/couponKill'
+  import {listCouponKill, createCouponKill, updateCouponKill, deleteCouponKill} from '@/api/couponKill'
   import waves from '@/directive/waves' // 水波纹指令
 
   export default {
@@ -86,8 +93,7 @@
           keyword: undefined,
           sort: '+id'
         },
-        dataForm: {
-        },
+        dataForm: {},
         dialogFormVisible: false,
         dialogStatus: '',
         textMap: {
@@ -154,7 +160,7 @@
         }
         // 验证通过之后
         if (result) {
-          this.dataForm.couponName =this.$refs.couponRef.selectedLabel
+          this.dataForm.couponName = this.$refs.couponRef.selectedLabel
           createCouponKill(this.dataForm).then(response => {
             this.dialogFormVisible = false
             this.getList()

@@ -9,9 +9,6 @@
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
-      <el-button class="filter-item" type="primary" v-waves icon="el-icon-download" @click="handleDownload"
-                 :loading="downloadLoading">导出
-      </el-button>
     </div>
 
     <!-- 查询结果 -->
@@ -148,7 +145,6 @@
           sort: [{required: true, message: '排序不能为空', trigger: 'blur'}],
           imgUrl: [{required: true, message: '图片不能为空', trigger: 'blur'}]
         },
-        downloadLoading: false,
         dialogImageUrl: '',
         dialogVisible: false
       }
@@ -297,15 +293,6 @@
           })
           const index = this.list.indexOf(row)
           this.list.splice(index, 1)
-        })
-      },
-      handleDownload() {
-        this.downloadLoading = true
-        import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['广告ID', '广告标题', '广告内容', '广告图片', '广告位置', '活动链接', '是否启用']
-          const filterVal = ['id', 'name', 'content', 'url', 'postion', 'link', 'enabled']
-          excel.export_json_to_excel2(tHeader, this.list, filterVal, '广告信息')
-          this.downloadLoading = false
         })
       }
     }

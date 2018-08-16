@@ -8,7 +8,6 @@
       <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入行政区域编码" v-model="listQuery.code">
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
-      <el-button class="filter-item" type="primary" v-waves icon="el-icon-download" @click="handleDownload" :loading="downloadLoading">导出</el-button>
     </div>
 
     <!-- 查询结果 -->
@@ -27,10 +26,10 @@
         <template slot-scope="scope">
           {{scope.row.type | typeFilter }}
         </template>
-      </el-table-column>  
+      </el-table-column>
 
       <el-table-column align="center" min-width="100px" label="区域编码" prop="code">
-      </el-table-column>  
+      </el-table-column>
 
     </el-table>
 
@@ -64,8 +63,7 @@ export default {
         name: undefined,
         code: undefined,
         sort: '+id'
-      },
-      downloadLoading: false
+      }
     }
   },
   filters: {
@@ -106,15 +104,6 @@ export default {
     handleCurrentChange(val) {
       this.listQuery.page = val
       this.getList()
-    },
-    handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['区域ID', '区域父ID', '区域名称', '区域类型', '区域编码']
-        const filterVal = ['id', 'pid', 'name', 'type', 'code']
-        excel.export_json_to_excel2(tHeader, this.list, filterVal, '行政区域信息')
-        this.downloadLoading = false
-      })
     }
   }
 }

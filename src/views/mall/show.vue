@@ -9,7 +9,6 @@
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
-      <el-button class="filter-item" type="primary" v-waves icon="el-icon-download" @click="handleDownload" :loading="downloadLoading">导出</el-button>
     </div>
 
     <!-- 查询结果 -->
@@ -143,7 +142,6 @@
           subtitle: [{ required: true, message: '专题子标题不能为空', trigger: 'blur' }],
           content: [{ required: true, message: '专题内容不能为空', trigger: 'blur' }]
         },
-        downloadLoading: false,
         editorInit: {
           language: 'zh_CN',
           plugins: ['advlist anchor autolink autoresize autosave code codesample colorpicker colorpicker contextmenu directionality emoticons fullscreen hr image imagetools importcss insertdatetime legacyoutput link lists media nonbreaking noneditable pagebreak paste preview print save searchreplace tabfocus table template textcolor textpattern visualblocks visualchars wordcount'],
@@ -275,15 +273,6 @@
           })
           const index = this.list.indexOf(row)
           this.list.splice(index, 1)
-        })
-      },
-      handleDownload() {
-        this.downloadLoading = true
-        import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['专题ID', '专题标题', '专题子标题', '专题内容', '商品低价', '阅读量', '是否显示']
-          const filterVal = ['id', 'title', 'subtitle', 'content', 'priceInfo', 'readCount', 'isShow']
-          excel.export_json_to_excel2(tHeader, this.list, filterVal, '专题信息')
-          this.downloadLoading = false
         })
       }
     }

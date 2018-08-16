@@ -9,7 +9,6 @@
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button class="filter-item" type="primary" @click="handleCreate" icon="el-icon-edit">添加</el-button>
-      <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">导出</el-button>
     </div>
 
     <!-- 查询结果 -->
@@ -233,7 +232,6 @@ export default {
         name: [{ required: true, message: '类目名称不能为空', trigger: 'blur' }],
         keyword: [{ required: true, message: '类目关键字不能为空', trigger: 'blur' }]
       },
-      downloadLoading: false,
       iconUrlList: [],
       bannerUrlList: [],
       wapBannerList: [],
@@ -380,15 +378,6 @@ export default {
         })
         const index = this.list.indexOf(row)
         this.list.splice(index, 1)
-      })
-    },
-    handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['类目ID', '名称', '关键字', '级别', '父类目ID', '是否显示', '图标', '首页横幅', '类目页标题', '类目页介绍', '类目页横幅']
-        const filterVal = ['id', 'name', 'keyword', 'level', 'parentId', 'isShow', 'iconUrl', 'bannerUrl', 'frontName', 'frontDesc', 'wapBannerUrl']
-        excel.export_json_to_excel2(tHeader, this.list, filterVal, '商品类目信息')
-        this.downloadLoading = false
       })
     },
     iconUrlHandleExceed(files, fileList) {
